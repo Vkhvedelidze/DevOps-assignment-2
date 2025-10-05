@@ -40,8 +40,7 @@ This is a web-based notes application that allows you to:
    ```
    pip install -r requirements.txt
    ```
-
-3. **Run the application**:
+3. Run the app:
    ```
    python run.py
    ```
@@ -55,7 +54,7 @@ This is a web-based notes application that allows you to:
    http://localhost:8000
    ```
 
-### Alternative Running Method
+### Alternative Run Method
 You can also use the convenient run script:
 ```
 python run.py
@@ -86,24 +85,15 @@ python run.py
 2. Confirm the deletion in the popup dialog
 3. The note and all its versions will be permanently deleted
 
-### Project Structure
-
--**main.py**:                  Main application file (FastAPI backend)
-
--**run.py**:                   Simple script to start the application
-
--**test_app.py**:              Test suite for the application
-
--**requirements.txt**:         Python packages needed
-
--**README.md**:               Project description
-
--**templates/index.html**:     Main web page
-
--**static/style.css**:         Styling for the web page
-
--**static/script.js**:         JavaScript functionality
-
+## Project Structure
+- **main.py**: FastAPI backend and API endpoints
+- **run.py**: Convenience launcher
+- **test_app.py**: Basic tests
+- **requirements.txt**: Dependencies
+- **templates/index.html**: Main UI
+- **static/style.css**: Styles
+- **static/script.js**: Client-side logic
+- **notes_data.json**: Persistent storage
 
 ## Technical Details
 
@@ -124,9 +114,6 @@ python run.py
 - **Structure**: Separate storage for notes and versions
 - **Backup**: Easy to backup by copying the JSON file
 
-## API Endpoints
-
-RESTful API endpoints:
 
 - `GET /api/notes/` - Get all notes
 - `POST /api/notes/` - Create a new note

@@ -125,10 +125,8 @@ async function selectNote(noteId) {
             item.classList.remove('active');
         });
         document.querySelector(`[data-note-id="${noteId}"]`).classList.add('active');
-        
         // Load versions for this note
         await loadNoteVersions(noteId);
-        
     } catch (error) {
         console.error('Failed to load note:', error);
     }
@@ -177,7 +175,6 @@ async function saveNote() {
         
         await loadNotes();
         await loadNoteVersions(currentNoteId);
-        
     } catch (error) {
         console.error('Failed to save note:', error);
     }
@@ -369,19 +366,23 @@ function showNotification(message, type = 'info') {
 function showConfirmModal(message, onConfirm) {
     confirmMessage.textContent = message;
     confirmModal.style.display = 'flex';
-    
-    // Remove existing listeners
-    const newConfirmYes = confirmYes.cloneNode(true);
-    const newConfirmNo = confirmNo.cloneNode(true);
-    confirmYes.parentNode.replaceChild(newConfirmYes, confirmYes);
-    confirmNo.parentNode.replaceChild(newConfirmNo, confirmNo);
-    
-    // Add new listeners
-    newConfirmYes.addEventListener('click', () => {
+
+    // Always get fresh button references to avoid stale listeners
+    const yesBtnOriginal = document.getElementById('confirmYes');
+    const noBtnOriginal = document.getElementById('confirmNo');
+
+    // Replace buttons to remove old listeners, then re-query by id
+    yesBtnOriginal.replaceWith(yesBtnOriginal.cloneNode(true));
+    noBtnOriginal.replaceWith(noBtnOriginal.cloneNode(true));
+
+    const yesBtn = document.getElementById('confirmYes');
+    const noBtn = document.getElementById('confirmNo');
+
+    yesBtn.addEventListener('click', () => {
         hideConfirmModal();
         onConfirm();
     });
-    newConfirmNo.addEventListener('click', hideConfirmModal);
+    noBtn.addEventListener('click', hideConfirmModal);
 }
 
 function hideConfirmModal() {
