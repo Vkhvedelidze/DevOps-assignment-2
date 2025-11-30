@@ -1,4 +1,5 @@
 import os
+
 # Add the project root to the path so we can import app
 import sys
 
