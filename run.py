@@ -6,26 +6,27 @@ This script provides an easy way to start the application
 import uvicorn
 import os
 import sys
+from app.config import DEFAULT_HOST, DEFAULT_PORT, LOG_LEVEL
 
 def main():
     print("Starting Notes App with Versioning...")
     print("Features: CRUD operations, versioning, and modern UI")
-    print("Access the app at: http://localhost:8000")
-    print("API docs at: http://localhost:8000/docs")
+    print(f"Access the app at: http://localhost:{DEFAULT_PORT}")
+    print(f"API docs at: http://localhost:{DEFAULT_PORT}/docs")
     print("=" * 50)
     
     #Check if we're in the right directory
-    if not os.path.exists("main.py"):
+    if not os.path.exists("app/main.py"):
         print("Error: main.py not found. Please run from the project root directory.")
         sys.exit(1)
     # Start the application
     try:
         uvicorn.run(
-            "main:app",
-            host="0.0.0.0",
-            port=8000,
+            "app.main:app",
+            host=DEFAULT_HOST,
+            port=DEFAULT_PORT,
             reload=True,
-            log_level="info"
+            log_level=LOG_LEVEL
         )
     except KeyboardInterrupt:
         print("\nShutting down Notes App...")
