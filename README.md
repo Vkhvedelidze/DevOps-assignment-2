@@ -2,10 +2,7 @@
 
 A modern, production-ready notes application built with Python FastAPI, featuring full CI/CD, containerization, monitoring, and comprehensive testing.
 
-[![CI Pipeline](https://github.com/username/repo/workflows/CI%20Pipeline/badge.svg)](https://github.com/username/repo/actions)
-[![Coverage](https://img.shields.io/badge/coverage-86%25-brightgreen)](./htmlcov/index.html)
-
----
+--
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
@@ -24,10 +21,10 @@ This project is a **Notes Application** built with **FastAPI**. It allows users 
 
 ### Key Technologies
 - **Framework**: FastAPI (High performance, async support, auto-docs)
-- **Database**: SQLAlchemy ORM with SQLite (Dev) and PostgreSQL (Prod)
+- **Database**: SQLAlchemy ORM with SQLite
 - **Validation**: Pydantic v2
 - **Frontend**: Bootstrap 5, Vanilla JS
-- **DevOps**: Docker, GitHub Actions, Prometheus, Azure
+- **DevOps**: Docker, GitHub Actions, Prometheus
 
 ---
 
@@ -112,7 +109,7 @@ The project follows a modular structure to ensure separation of concerns:
 
 #### `app/` Directory
 - **`app/config.py`**: Centralizes all configuration (env vars, constants) following 12-Factor App principles.
-- **`app/database.py`**: Handles database connection. Automatically switches between SQLite (local) and PostgreSQL (cloud) based on `DATABASE_URL`.
+- **`app/database.py`**: Handles SQLite database connection and session management.
 - **`app/models.py`**: Defines the database schema (Tables: `notes`, `note_versions`).
 - **`app/schemas.py`**: Defines Pydantic models for request/response validation.
 - **`app/crud.py`**: Contains the logic for interacting with the database.
@@ -121,45 +118,15 @@ The project follows a modular structure to ensure separation of concerns:
 
 ---
 
-## Deployment Guide
-
-This application is designed to be deployed to **Azure Web Apps for Containers** using **GitHub Actions**.
-
-### Prerequisites
-1. **Azure Account**: Create a Web App for Containers.
-2. **Docker Hub Account**: Create a repository named `notes-app`.
-
-### Step 1: Azure Configuration
-1. Create a **Resource Group** and **Azure Container Registry (ACR)** (optional, or use Docker Hub).
-2. Create an **Azure Database for PostgreSQL** (Flexible Server).
-   - **Important**: Allow public access from any Azure service in Networking settings.
-3. Create a **Web App for Containers**.
-   - **Image Source**: Docker Hub (or ACR).
-   - **Startup Command**: `uvicorn app.main:app --host 0.0.0.0 --port 8000` (usually auto-detected).
-
-### Step 2: Environment Variables
-Configure the following in Azure Web App -> Settings -> Configuration:
-
-- **`DATABASE_URL`**: Connection string for your PostgreSQL database.
-  - Format: `postgresql://username:YOUR_PASSWORD@hostname:5432/dbname`
-  - **Note**: Replace `YOUR_PASSWORD` with your actual database password.
-
-### Step 3: GitHub Secrets
-Go to your repository Settings -> Secrets and variables -> Actions, and add:
-
-| Secret Name | Description |
-|-------------|-------------|
-| `DOCKERHUB_USERNAME` | Your Docker Hub username |
-| `DOCKERHUB_TOKEN` | Docker Hub Access Token |
-| `AZURE_WEBAPP_NAME` | The name of your Azure Web App |
-| `AZURE_WEBAPP_PUBLISH_PROFILE` | The publish profile XML from Azure Portal |
-
-### Step 4: CI/CD Pipeline
-The pipeline (`.github/workflows/cd.yml`) triggers on push to `main`:
-1. Runs tests and linting.
-2. Builds the Docker image.
-3. Pushes to Docker Hub.
-4. Deploys to Azure Web App.
+### CI/CD Pipeline
+The pipeline (`.github/workflows/ci.yml` and `.github/workflows/cd.yml`) automates:
+1. **CI Pipeline** (on every push):
+   - Runs tests with coverage (fails if < 70%)
+   - Linting with black, isort, and flake8
+   - Docker image build and validation
+2. **CD Pipeline** (on push to `main`):
+   - Builds and pushes Docker image to Docker Hub
+   - Can deploy to cloud platform (configuration required)
 
 ---
 
@@ -170,12 +137,7 @@ The pipeline (`.github/workflows/cd.yml`) triggers on push to `main`:
   - Returns status, uptime, and version.
 - **Metrics**: `GET /metrics`
   - Exposes Prometheus metrics: `http_requests_total`, `http_request_duration_seconds`, `http_errors_total`.
-
-### Local Dashboard
-Run Prometheus locally to visualize metrics:
-```bash
-docker run -p 9090:9090 -v ./prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
-```
+  - this is flagged as dangerous site and you have to force it  to access the website
 
 ---
 
@@ -194,9 +156,5 @@ docker run -p 9090:9090 -v ./prometheus.yml:/etc/prometheus/prometheus.yml prom/
 
 ### Future Improvements
 - **Short-term**: Add integration tests for version restore edge cases.
-- **Long-term**: Implement distributed tracing (OpenTelemetry) and blue-green deployments.
+- **Long-term**: Implement distributed tracing (OpenTelemetry) and blue-green deployments. Aslo add login and other fucntionalities.
 
----
-
-## License
-Educational project for DevOps course.
