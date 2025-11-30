@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+
 from .database import Base
-from typing import Optional, List
 
 
 # SQLAlchemy Models (DB)
@@ -15,7 +15,10 @@ class NoteDB(Base):
     updated_at = Column(String)
     version = Column(Integer)
 
-    versions = relationship("NoteVersionDB", back_populates="note", cascade="all, delete-orphan")
+    versions = relationship(
+        "NoteVersionDB", back_populates="note", cascade="all, delete-orphan"
+    )
+
 
 class NoteVersionDB(Base):
     __tablename__ = "note_versions"
@@ -29,5 +32,5 @@ class NoteVersionDB(Base):
 
     note = relationship("NoteDB", back_populates="versions")
 
-# Pydantic models moved to schemas.py
 
+# Pydantic models moved to schemas.py

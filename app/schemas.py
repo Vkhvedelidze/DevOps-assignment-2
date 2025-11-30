@@ -1,13 +1,17 @@
-from pydantic import BaseModel
 from typing import Optional
+
+from pydantic import BaseModel
+
 
 class NoteCreate(BaseModel):
     title: str
     content: str
 
+
 class NoteUpdate(BaseModel):
     title: Optional[str] = None
     content: Optional[str] = None
+
 
 class Note(BaseModel):
     id: str
@@ -19,6 +23,7 @@ class Note(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 class NoteVersion(BaseModel):
     id: str

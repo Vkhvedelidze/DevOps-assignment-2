@@ -2,6 +2,7 @@
 Application configuration and constants.
 Centralizes configuration values following the Single Responsibility Principle.
 """
+
 import os
 
 # Database Configuration
