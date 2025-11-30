@@ -1,11 +1,9 @@
 import time
-from fastapi.responses import Response
-from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
-
 
 from fastapi import FastAPI
+from fastapi.responses import Response
 from fastapi.staticfiles import StaticFiles
-
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
 from .config import API_VERSION, APP_TITLE, STATIC_DIR
 from .database import Base, engine

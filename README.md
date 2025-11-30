@@ -1,215 +1,202 @@
-# Notes App with Versioning
+# Notes App with Versioning - DevOps Assignment 2
 
-A simple notes application built with Python FastAPI and HTML/CSS/JavaScript. This app lets you create, edit, and delete notes while keeping track of all changes through a version history system.
+A modern, production-ready notes application built with Python FastAPI, featuring full CI/CD, containerization, monitoring, and comprehensive testing.
 
-## What This App Does
+[![CI Pipeline](https://github.com/username/repo/workflows/CI%20Pipeline/badge.svg)](https://github.com/username/repo/actions)
+[![Coverage](https://img.shields.io/badge/coverage-86%25-brightgreen)](./htmlcov/index.html)
 
-This is a web-based notes application that allows you to:
-- Create new notes with titles and content
-- Edit existing notes (automatically creates new versions)
-- Delete notes completely
-- View the complete history of changes for any note
-- Restore any previous version of a note
+---
+
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [Features](#features)
+3. [Quick Start](#quick-start)
+4. [Architecture & Codebase](#architecture--codebase)
+5. [Deployment Guide](#deployment-guide)
+6. [Monitoring](#monitoring)
+7. [Project Report](#project-report)
+
+---
+
+## Project Overview
+
+This project is a **Notes Application** built with **FastAPI**. It allows users to create, read, update, and delete notes. The application supports versioning of notes, meaning edits create new versions rather than overwriting the original note immediately. It also includes monitoring with Prometheus and is container-ready with Docker.
+
+### Key Technologies
+- **Framework**: FastAPI (High performance, async support, auto-docs)
+- **Database**: SQLAlchemy ORM with SQLite (Dev) and PostgreSQL (Prod)
+- **Validation**: Pydantic v2
+- **Frontend**: Bootstrap 5, Vanilla JS
+- **DevOps**: Docker, GitHub Actions, Prometheus, Azure
+
+---
 
 ## Features
 
-### Core Features
-- **Create Notes**: Add new notes with titles and content
-- **Read Notes**: View all your notes in a clean list
-- **Update Notes**: Edit existing notes, which automatically creates new versions
-- **Delete Notes**: Remove notes completely along with their version history
-- **Version History**: Every change is tracked with timestamps
-- **Restore Versions**: Go back to any previous version of a note
+### Core Functionality
+- **CRUD Operations**: Create, read, update, and delete notes
+- **Version Control**: Full version history with restore capability
+- **Search**: Real-time filtering by title or content
+- **Modern UI**: Bootstrap 5-based responsive interface
 
-### Technical Features
-- **RESTful API**: Clean API design that follows web standards 
-- **Persistent Storage**: Your notes are saved to a JSON file
-- **Real-time Updates**: Changes appear immediately without refreshing
-- **Error Handling**: Clear error messages when something goes wrong
+### DevOps Enhancements
+- **86% Test Coverage**: Comprehensive unit and integration tests
+- **CI/CD Pipeline**: Automated testing, linting, and deployment
+- **Containerization**: Optimized Docker image with security best practices
+- **Monitoring**: Prometheus metrics for requests, latency, and errors
+- **Health Checks**: Enhanced endpoint with uptime and version info
 
-## How to Run the Application
+---
 
-### Prerequisites
-- Python and pip installed
+## Quick Start
 
-### Installation Steps
+### Local Development
+```bash
+# Install dependencies
+pip install -r requirements.txt
 
-1. **Download the project files or copy Git repo** 
-
-2. **Install the required packages**:
-   ```
-   pip install -r requirements.txt
-   ```
-3. Run the app:
-   ```
-   python run.py
-   ```
-   Or alternatively:
-   ```
-   python main.py
-   ```
-
-4. **Open your web browser** and go to:
-   ```
-   http://localhost:8000
-   ```
-
-### Alternative Run Method
-You can also use the convenient run script:
-```
+# Run the application
 python run.py
 ```
+Access at `http://localhost:8000`
 
-## How to Use the Application
-
-### Creating a Note
-1. Click the "New Note" button
-2. Enter a title for your note
-3. Write your content in the text area
-4. Click "Save" to create the note
-
-### Editing a Note
-1. Click on any note in the notes list
-2. The note will open in the editor
-3. Make your changes to the title or content
-4. Click "Save" to update the note (this creates a new version)
-
-### Viewing Version History
-1. Click on a note to select it
-2. Click the history icon (clock symbol) next to the note
-3. You'll see all previous versions with timestamps
-4. Click "Restore" on any version to go back to that version
-
-### Deleting a Note
-1. Click the trash icon next to any note
-2. Confirm the deletion in the popup dialog
-3. The note and all its versions will be permanently deleted
-
-## Project Structure
-- **main.py**: FastAPI backend and API endpoints
-- **run.py**: Convenience launcher
-- **test_app.py**: Basic tests
-- **requirements.txt**: Dependencies
-- **templates/index.html**: Main UI
-- **static/style.css**: Styles
-- **static/script.js**: Client-side logic
-- **notes_data.json**: Persistent storage
-
-## Technical Details
-
-### Backend (Python FastAPI)
-- **Framework**: FastAPI for the web API
-- **Data Storage**: JSON file for simplicity
-- **API Endpoints**: RESTful design with proper HTTP methods (assignment requirement)
-- **Version Management**: Automatic version tracking for all changes
-
-### Frontend (HTML/CSS/JavaScript)
-- **HTML**: Clean structure
-- **CSS**: Modern styling with responsive design
-- **JavaScript**: Vanilla JavaScript (no frameworks)
-- **API Integration**: Direct communication with the backend
-
-### Data Storage
-- **Format**: JSON file (notes_data.json)
-- **Structure**: Separate storage for notes and versions
-- **Backup**: Easy to backup by copying the JSON file
-
-
-- `GET /api/notes/` - Get all notes
-- `POST /api/notes/` - Create a new note
-- `GET /api/notes/{id}` - Get a specific note
-- `PUT /api/notes/{id}` - Update a note
-- `DELETE /api/notes/{id}` - Delete a note
-- `GET /api/notes/{id}/versions` - Get all versions of a note
-- `POST /api/notes/{id}/restore/{version_id}` - Restore a note to a previous version
-
-You can test these endpoints using tools like Postman or curl, or view the interactive documentation at http://localhost:8000/docs when the app is running.
-
-## Testing
-
-### Running Tests
-To run the test suite:
-```
-python test_app.py
+### Using Docker
+```bash
+# Build and run
+docker build -t notes-app .
+docker run -p 8000:8000 notes-app
 ```
 
-The test suite includes:
-- Creating and retrieving notes
-- Updating notes and version tracking
-- Deleting notes
-- Version history functionality
-- Restore functionality
-- Error handling
-
-## Software Development Life Cycle (SDLC)
-
-### Chosen SDLC Model: Agile Development
-
-**Justification for Agile Model:**
-- **Rapid Prototyping**: The assignment requires a working application with multiple features quickly
-- **Flexibility**: Individual assignment with evolving requirements needs adaptability
-- **Feature-Driven Development**: Assignment specifically requires 2+ core features plus a third feature
-- **Continuous Integration**: Promotes continuous testing and integration for seamless functionality
-- **Documentation Balance**: Emphasizes working software while maintaining necessary documentation
-
-### SDLC Implementation:
-1. **Planning**: Analyzed assignment requirements and selected technology stack
-2. **Analysis**: Defined functional and non-functional requirements
-3. **Design**: Created system architecture and API design
-4. **Implementation**: Built FastAPI backend and HTML/CSS/JavaScript frontend
-5. **Testing**: Performed unit testing and integration testing
-6. **Deployment**: Set up local development environment
-7. **Maintenance**: Code review and documentation updates
-
-## System Architecture
-
-### Architecture Diagram
+### Testing
+```bash
+# Run tests with coverage
+pytest --cov=app --cov-report=term-missing --cov-report=html
 ```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend      │    │   Backend       │    │   Data Layer    │
-│   (HTML/CSS/JS) │◄──►│   (FastAPI)     │◄──►│   (JSON Files)  │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
+**Current Coverage**: 86% (exceeds 70% requirement ✓)
+
+---
+
+## Architecture & Codebase
+
+### Project Structure
+The project follows a modular structure to ensure separation of concerns:
+
+```
+├── app/
+│   ├── config.py         # Centralized configuration (SRP)
+│   ├── database.py       # Database setup & connection
+│   ├── models.py         # SQLAlchemy ORM models
+│   ├── schemas.py        # Pydantic data schemas (DTOs)
+│   ├── crud.py           # Database operations (CRUD)
+│   ├── routes.py         # API endpoints
+│   ├── main.py           # FastAPI application entry
+│   └── monitoring.py     # Prometheus metrics middleware
+├── tests/
+│   ├── conftest.py       # Test fixtures
+│   └── test_app.py       # Integration/Unit tests
+├── static/               # Frontend assets (JS, CSS)
+├── templates/            # HTML templates
+├── .github/workflows/    # CI/CD pipelines
+├── Dockerfile            # Container definition
+├── requirements.txt      # Python dependencies
+├── run.py                # Local runner script
+└── README.md             # This file
 ```
 
-### Component Overview
-- **Frontend**: HTML templates, CSS styling, JavaScript functionality
-- **Backend**: FastAPI application with RESTful API endpoints
-- **Data Layer**: JSON file storage for notes and version history
-- **API Layer**: RESTful endpoints for CRUD operations and versioning
+### File Descriptions
 
-### Data Flow
-1. User interacts with HTML interface
-2. JavaScript sends HTTP requests to FastAPI backend
-3. Backend processes requests and updates JSON data files
-4. Backend returns responses to frontend
-5. Frontend updates UI based on responses
+#### Root Directory
+- **`run.py`**: Entry point script to start the application locally using `uvicorn`.
+- **`Dockerfile`**: Multi-stage build definition for creating the application container.
+- **`prometheus.yml`**: Configuration for Prometheus monitoring to scrape the `/metrics` endpoint.
 
-## Assignment Requirements
+#### `app/` Directory
+- **`app/config.py`**: Centralizes all configuration (env vars, constants) following 12-Factor App principles.
+- **`app/database.py`**: Handles database connection. Automatically switches between SQLite (local) and PostgreSQL (cloud) based on `DATABASE_URL`.
+- **`app/models.py`**: Defines the database schema (Tables: `notes`, `note_versions`).
+- **`app/schemas.py`**: Defines Pydantic models for request/response validation.
+- **`app/crud.py`**: Contains the logic for interacting with the database.
+- **`app/routes.py`**: Defines the API endpoints and connects them to CRUD operations.
+- **`app/monitoring.py`**: Custom middleware to track request metrics (latency, count, errors).
 
-This project meets all the requirements for the Individual Assignment 1:
+---
 
-**Required Core Features (2+ needed):**
-- **CRUD Operations**: Complete create, read, update, delete functionality
-- **Persistent Storage**: JSON-based data storage  
-- **RESTful API Endpoints**: Full API with proper HTTP methods
+## Deployment Guide
 
-**Third Feature (for higher grade):**
-- **Versioning System**: Advanced version history with restore functionality
+This application is designed to be deployed to **Azure Web Apps for Containers** using **GitHub Actions**.
 
-**Documentation Requirements:**
-- **Setup Instructions**: Complete installation and usage guide
-- **Version Control**: Git repository with meaningful commits
+### Prerequisites
+1. **Azure Account**: Create a Web App for Containers.
+2. **Docker Hub Account**: Create a repository named `notes-app`.
 
-**Additional Features:**
-- Modern web interface with responsive design
-- Real-time updates without page refresh
-- Comprehensive error handling
+### Step 1: Azure Configuration
+1. Create a **Resource Group** and **Azure Container Registry (ACR)** (optional, or use Docker Hub).
+2. Create an **Azure Database for PostgreSQL** (Flexible Server).
+   - **Important**: Allow public access from any Azure service in Networking settings.
+3. Create a **Web App for Containers**.
+   - **Image Source**: Docker Hub (or ACR).
+   - **Startup Command**: `uvicorn app.main:app --host 0.0.0.0 --port 8000` (usually auto-detected).
 
-## Future Improvements
+### Step 2: Environment Variables
+Configure the following in Azure Web App -> Settings -> Configuration:
 
-This application can be extended with:
-- User authentication and accounts
-- Database storage instead of JSON files
-- Real-time collaboration features
-- Cloud storage integration
-- Advanced search functionality
+- **`DATABASE_URL`**: Connection string for your PostgreSQL database.
+  - Format: `postgresql://username:YOUR_PASSWORD@hostname:5432/dbname`
+  - **Note**: Replace `YOUR_PASSWORD` with your actual database password.
+
+### Step 3: GitHub Secrets
+Go to your repository Settings -> Secrets and variables -> Actions, and add:
+
+| Secret Name | Description |
+|-------------|-------------|
+| `DOCKERHUB_USERNAME` | Your Docker Hub username |
+| `DOCKERHUB_TOKEN` | Docker Hub Access Token |
+| `AZURE_WEBAPP_NAME` | The name of your Azure Web App |
+| `AZURE_WEBAPP_PUBLISH_PROFILE` | The publish profile XML from Azure Portal |
+
+### Step 4: CI/CD Pipeline
+The pipeline (`.github/workflows/cd.yml`) triggers on push to `main`:
+1. Runs tests and linting.
+2. Builds the Docker image.
+3. Pushes to Docker Hub.
+4. Deploys to Azure Web App.
+
+---
+
+## Monitoring
+
+### Endpoints
+- **Health Check**: `GET /health`
+  - Returns status, uptime, and version.
+- **Metrics**: `GET /metrics`
+  - Exposes Prometheus metrics: `http_requests_total`, `http_request_duration_seconds`, `http_errors_total`.
+
+### Local Dashboard
+Run Prometheus locally to visualize metrics:
+```bash
+docker run -p 9090:9090 -v ./prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+```
+
+---
+
+## Project Report
+
+### Achievements
+- **Code Quality**: Refactored to adhere to SOLID principles. Implemented `app/config.py` for SRP.
+- **Testing**: Achieved **86% code coverage**, exceeding the 70% requirement.
+- **CI/CD**: Implemented a robust pipeline with matrix testing (Python 3.10-3.12), linting (flake8, black), and automated deployment.
+- **Security**: Docker image runs as a non-root user. Secrets are managed via GitHub Secrets.
+
+### Improvements Made
+1. **Configuration Management**: Moved all hardcoded values to `app/config.py`.
+2. **Error Handling**: Replaced file-based logging with structured logging.
+3. **Dependency Updates**: Upgraded Pydantic to v2 and SQLAlchemy to latest stable versions.
+
+### Future Improvements
+- **Short-term**: Add integration tests for version restore edge cases.
+- **Long-term**: Implement distributed tracing (OpenTelemetry) and blue-green deployments.
+
+---
+
+## License
+Educational project for DevOps course.
